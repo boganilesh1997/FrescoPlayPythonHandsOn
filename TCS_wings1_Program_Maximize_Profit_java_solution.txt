@@ -1,0 +1,54 @@
+Q) The cost of a stock on each day is given in an array, find the max profit that you can make by buying and selling in those days. 
+For example, if the given array is {100, 180, 260, 310, 40, 535, 695}, the maximum profit can earned by buying on day 0, selling on day 3. 
+Again buy on day 4 and sell on day 6. 
+If the given array of prices is sorted in decreasing order, then profit cannot be earned at all.
+
+Program Java :- 
+Tested with below inputs :-
+
+TC1 input : 100 180 260 310 40 535 695 
+ buying at 100 selling at 310 hence profit 210
+ next buying at 10 selling at 695 profit 655 
+ total profit:- 865  
+
+TC2 input :- 100 50 100 200 40 100 140                                                                                                                                           
+  buying on 50 selling at 200 profit 150
+  buying at 40 selling at 140 profit 100
+  total profit 250 
+
+import java.util.*;
+public class Main
+{
+	public static void main(String[] args) {
+		// input
+		Scanner sc = new Scanner(System.in);
+		int [] p = new int[7];
+		for(int i=0;i<7;i++)
+		    p[i]= sc.nextInt();
+		
+		int prof =0;
+		for(int i=0; i<7;i++)
+		{
+		    int sum = 0;
+		    for(int j=i+1;j<7;j++)
+		    {
+		        if(p[j]-p[i]>sum)
+		        {
+		            sum=p[j]-p[i];
+		        }
+		        else{
+		            prof+=sum;
+		            i=j-1;
+		            break;
+		        }
+		        
+		        if(j==6)
+		        {
+		            prof +=sum;
+		            i=j;
+		        }
+		    }
+		}
+		System.out.println(prof);
+	}
+}
