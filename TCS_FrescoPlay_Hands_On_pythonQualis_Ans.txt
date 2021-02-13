@@ -1,0 +1,381 @@
+doc Test  to check palindrom :-
+
+#!/bin/python3
+
+import math
+import os
+import random
+import re
+import sys
+import inspect
+
+
+# Complete the following isPalindrome function:
+def isPalindrome(x):
+    # Write the doctests:
+    """
+    >>> isPalindrome(121)
+    True
+    >>> isPalindrome(344)
+    False
+    >>> isPalindrome(-121)
+    Traceback (most recent call last):
+    ValueError: x must be positive integer.
+    >>> isPalindrome("hello")
+    Traceback (most recent call last):
+    TypeError: x must be integer.
+    """
+    # Write the functionality:
+    
+    try:
+        x = int(x)
+        temp=x
+        rev=0
+        if(x>0):
+            while(x>0):
+                dig=x%10
+                rev=rev*10+dig
+                x=x//10
+            if(temp==rev):
+                return True
+            else:
+                return False
+        elif(x<0):
+            raise ValueError
+        else:
+            raise TypeError
+    except ValueError:
+        raise ValueError("x must be a positive integer")
+    except TypeError:
+        raise TypeError("x must be an integer")
+
+===================================================================================================================================
+
+2) 
+import inspect
+import doctest
+import re
+import math
+# Define the class 'Circle' and its methods with proper doctests:
+class Circle:
+    
+    def __init__(self, radius):
+        # Define doctests for __init__ method:
+        """ 
+        >>> c1 = Circle(2.5)
+        >>> c1.radius
+        2.5
+        """
+        self.radius = radius
+        
+    def area(self):
+        # Define doctests for area method:
+        """
+        >>> c1 = Circle(2.5)
+        >>> c1.area()
+        19.63
+        """
+        # Define area functionality:
+        return round(math.pi*(self.radius**2),2)
+        
+        
+    def circumference(self):
+        # Define doctests for circumference method:
+        """
+        >>> c1 = Circle(2.5)
+        >>> c1.circumference()
+        15.71
+        """
+        # Define circumference functionality:
+        return round(2*math.pi*(self.radius),2)
+
+if __name__ == '__main__':
+
+
+==============================================================================================================================================================
+3)
+
+
+import inspect
+import re
+import unittest
+import math
+
+# Define class 'Circle' and its methods with proper doctests:
+class Circle:
+    
+    def __init__(self, radius):
+        self.radius = radius
+        if not isinstance(self.radius,(int,float)):
+            raise TypeError("radius must be a number")
+        elif self.radius<0 or self.radius>1000:
+            raise ValueError("radius must be between 0 and 1000 inclusive")
+        else:
+            pass
+
+    def area(self):
+        # Define area functionality:
+        return round(math.pi*(self.radius**2),2)      
+
+    def circumference(self):
+        # Define circumference functionality:
+        return round(2*math.pi*self.radius,2)
+        
+class TestCircleCreation(unittest.TestCase):
+
+    def test_creating_circle_with_numeric_radius(self):
+        # Define a circle 'c1' with radius 2.5, and check if 
+        # the value of c1.radius is equal to 2.5 or not.
+        c1 = Circle(2.5)
+        self.assertEqual(c1.radius,2.5)
+
+
+    def test_creating_circle_with_negative_radius(self):
+        # Define a circle 'c' with radius -2.5, and check 
+        # if it raises a ValueError with the message
+        # "radius must be between 0 and 1000 inclusive".
+        with self.assertRaises(ValueError) as e:
+            c = Circle(-2.5)
+        self.assertEqual(str(e.exception),"radius must be between 0 and 1000 inclusive")
+
+    def test_creating_circle_with_greaterthan_radius(self):
+        # Define a circle 'c' with radius 1000.1, and check 
+        # if it raises a ValueError with the message
+        # "radius must be between 0 and 1000 inclusive".        
+        with self.assertRaises(ValueError) as e:
+            c = Circle(1000.1)
+        self.assertEqual(str(e.exception),"radius must be between 0 and 1000 inclusive")      
+
+    def test_creating_circle_with_nonnumeric_radius(self):
+        # Define a circle 'c' with radius 'hello' and check 
+        # if it raises a TypeError with the message
+        # "radius must be a number".        
+        with self.assertRaises(TypeError) as e:
+            c = Circle("hello")
+        self.assertEqual(str(e.exception), "radius must be a number")
+
+if __name__ == '__main__':
+
+==============================================================================================================================================================================
+
+HackerRank nose
+
+# Import the Circle class from the circle module using the expression from proj.circle import Circle
+# Import assert_raises from nose.tools using the expression from nose.tools import assert_raises, eq_.
+# Use eq_ method for assert, and to check. Don't use assert statement.
+from proj.circle import Circle
+from nose.tools import assert_raises
+from nose.tools import eq_
+
+# Define a nose test class 'TestingCircleCreation'
+class TestingCircleCreation:
+    # Define a no creates a circle witse test method 'test_creating_circle_with_numeric_radius', whichh radius 2.5, and check if its radius value is 2.5 using eq_ method.
+    def test_creating_circle_with_numeric_radius(self):
+      c1=Circle(2.5)
+      eq_(c1.radius, 2.5)
+    # Define a nose test method 'test_creating_circle_with_negative_radius', which checks if the ValueError exception is raised with the error message "radius must be between 0 and 1000 inclusive" using eq_ method, while creating a circle of radius -2.5.
+    # Hint: Use assert_raises and with.
+    def test_creating_circle_with_negative_radius(self):
+      with assert_raises(ValueError) as e:
+        c = Circle(-2.5)
+      eq_(str(e.exception),'radius must be between 0 and 1000 inclusive')
+    # Define a nose test method 'test_creating_circle_with_greaterthan_radius', which checks if the ValueError exception is raised with the error message "radius must be between 0 and 1000 inclusive" using eq_ method, while creating circle of radius 1000.1 .
+    # Hint: Use assert_raises and with
+    def test_creating_circle_with_greaterthan_radius(self):
+      with assert_raises(ValueError) as e:
+        c = Circle(1000.1)
+      eq_(str(e.exception),'radius must be between 0 and 1000 inclusive')
+
+    # Define a nose test method 'test_creating_circle_with_nonnumeric_radius', which checks if the TypeError exception is raised with the error message "radius must be a number" using eq_ method, while creating circle of radius 'hello' .
+    # Hint: Use assert_raises and with.
+    def test_creating_circle_with_nonnumeric_radius(self):
+      with assert_raises(TypeError) as e:
+        c = Circle('hello')
+      eq_(str(e.exception),'radius must be a number')
+#Define a nose test class 'TestCircleArea'
+class TestCircleArea:
+    # Define a nose test method 'test_circlearea_with_random_numeric_radius', which creates a circle 'c1' with radius 2.5, and check if its computed area is 19.63 using eq_ method.
+    def test_circlearea_with_random_numeric_radius(self):
+      c1 = Circle(2.5)
+      eq_(c1.area(), 19.63)
+
+    # Define a nose test method 'test_circlearea_with_min_radius', which creates a circle 'c2' with radius 0, and check if its computed area is 0 using eq_ method.
+    def test_circlearea_with_min_radius(self):
+      c2 = Circle(0)
+      eq_(c2.area(), 0)
+
+    # Define a nose test method 'test_circlearea_with_max_radius', which creates a circle 'c3' with radius 1000, and check if its computed area is 3141592.65 using eq_ method.
+    def test_circlearea_with_max_radius(self):
+      c3 = Circle(1000)
+      eq_(c3.area(), 3141592.65)
+
+# Define a nose test class 'TestCircleCircumference'
+class TestCircleCircumference:
+    # Define a nose test method 'test_circlecircum_with_random_numeric_radius', which creates a circle 'c1' with radius 2.5, and check if its computed circumference is 15.71 using eq_ method.
+    def test_circlecircum_with_random_numeric_radius(self):
+      c1 = Circle(2.5)
+      eq_(c1.circumference(), 15.71)
+
+    # Define a nose test method 'test_circlecircum_with_min_radius', which creates a circle 'c2' with radius 0, and check if its computed circumference is 0 using eq_ method.
+    def test_circlecircum_with_min_radius(self):
+      c2 = Circle(0)
+      eq_(c2.circumference(), 0)
+
+    # Define a nose test method 'test_circlecircum_with_max_radius', which creates a circle 'c3' with radius 1000, and check if its computed circumference is 6283.19 using eq_ method.
+    def test_circlecircum_with_max_radius(self):
+      c3 = Circle(1000)
+      eq_(c3.circumference(), 6283.19)
+
+
+==========================================================================================================================================================================================================================================
+pytest :-
+import sys
+import os
+sys.path.append(os.getcwd())
+from proj.inventory import MobileInventory, InsufficientException
+import pytest
+# Import MobileInventory class and InsufficientException from the inventory module using the expression from proj.inventory import MobileInventory, InsufficientException.
+# Import pytest using the expression import pytest.
+# Use assert statement for assert, and to check. Ex: assert 1 == 1
+
+# Define a pytest test class **'TestingInventoryCreation'**
+class TestingInventoryCreation:
+
+    # Define a pytest test method **'test_creating_empty_inventory'**, which creates an empty inventory and checks if its 'balance_inventory' is an empty dict using assert.
+    def test_creating_empty_inventory(self):
+        c1 = MobileInventory()
+        assert c1.balance_inventory == {}
+
+    # Define a pytest test method **'test_creating_specified_inventory'**, which checks if inventory instance with input {'iPhone Model X':100, 'Xiaomi Model Y': 1000, 'Nokia Model Z':25}.
+    def test_creating_specified_inventory(self):
+      c = MobileInventory({"iPhone Model X":100,
+      "Xiaomi Model Y": 1000,
+      "Nokia Model Z":25})
+      assert c.balance_inventory=={'iPhone Model X':100,
+      'Xiaomi Model Y': 1000,
+      'Nokia Model Z':25}
+
+    # Define a pytest test method  **'test_creating_inventory_with_list'**, which checks if the  method raises a TypeError with the message "Input inventory must be an dictionary" whe a list "['iPhone Model X', 'Xiaomi Model Y', 'Nokia Model Z']" is passed as input using assert.
+    def test_creating_inventory_with_list(self):
+      with pytest.raises(TypeError) as e:
+        assert MobileInventory(['iPhone Model X', 'Xiaomi Model Y', 'Nokia Model Z'])
+      assert str(e.value) == "Input inventory must be a dictionary"
+
+      # assert str(e.value) == "Input inventory must be an dictionary"
+    # Define a pytest test method **'test_creating_inventory_with_numeric_keys'**, which checks if the  method raises a ValueError with the message "Mobile model name must be a string" using assert, when the dict {1:'iPhone Model X', 2:'Xiaomi Model Y', 3:'Nokia Model Z'} is passed as input.
+    def test_creating_inventory_with_numeric_keys(self):
+      with pytest.raises(ValueError) as e:
+        assert MobileInventory({1:'iPhone Model X', 2:'Xiaomi Model Y', 3:'Nokia Model Z'})
+      assert str(e.value) == "Mobile model name must be a string"
+
+    # Define a pytest test method **'test_creating_inventory_with_nonnumeric_values'**, which checks if the  method raises a ValueError with the message "No. of mobiles must be a positive integer" using assert, when the dict {'iPhone Model X':'100', 'Xiaomi Model Y': '1000', 'Nokia Model Z':'25'} is passed as input.
+    def test_creating_inventory_with_nonnumeric_values(self):
+      with pytest.raises(ValueError) as e:
+        assert MobileInventory({'iPhone Model X':'100', 'Xiaomi Model Y': '1000', 'Nokia Model Z':'25'})
+      assert str(e.value) == "No. of mobiles must be a positive integer"
+
+    # Define a pytest test method **'test_creating_inventory_with_negative_value'**, which checks if the  method raises a ValueError with the message "No. of mobiles must be a positive integer" using assert, when the dict {'iPhone Model X':-45, 'Xiaomi Model Y': 200, 'Nokia Model Z':25} is passed as input.
+    def test_creating_inventory_with_negative_value(self):
+      with pytest.raises(ValueError) as e:
+        assert MobileInventory({'iPhone Model X':-45, 'Xiaomi Model Y': 200, 'Nokia Model Z':25})
+      assert str(e.value) == "No. of mobiles must be a positive integer"
+
+# Define another pytest test class **'TestInventoryAddStock'**, which tests the behavior of the **'add_stock'** method, with the following tests
+class TestInventoryAddStock:
+
+    # Define a pytest class fixture 'setup_class', which creates an **'MobileInventory'** instance with input {'iPhone Model X':100, 'Xiaomi Model Y': 1000, 'Nokia Model Z':25} and assign it to class attribute **'inventory'**.
+    @classmethod
+    def setup_class(cls):
+      cls.inventory = MobileInventory({'iPhone Model X':100, 'Xiaomi Model Y': 1000, 'Nokia Model Z':25})
+
+    # Define a pytest test method **'test_add_new_stock_as_dict'**, which adds the new stock {'iPhone Model X':50, 'Xiaomi Model Y': 2000, 'Nokia Model A':10} to the existing inventory, and update the **balance_inventory** attribute. Also, check if the updated **balance_inventory** equals {'iPhone Model X':150, 'Xiaomi Model Y': 3000, 'Nokia Model Z':25, 'Nokia Model A':10} using assert.
+    def test_add_new_stock_as_dict(self):
+        self.inventory.add_stock({'iPhone Model X':50,
+        'Xiaomi Model Y': 2000,
+        'Nokia Model A':10})
+        assert self.inventory.balance_inventory == {'iPhone Model X':150,
+        'Xiaomi Model Y': 3000,
+        'Nokia Model Z':25,
+        'Nokia Model A':10}
+    # Define a pytest test method **'test_add_new_stock_as_list'**, which adds the new stock ['iPhone Model X', 'Xiaomi Model Y', 'Nokia Model Z'] to the existing inventory, and which checks if the method raises a TypeError with the message "Input stock must be a dictionary" using assert.
+    def test_add_new_stock_as_list(self):
+        with pytest.raises(TypeError) as e:
+          self.inventory.add_stock(['iPhone Model X', 'Xiaomi Model Y', 'Nokia Model Z'])
+        assert str(e.value) == "Input stock must be a dictionary"
+
+    # Define a pytest test method **'test_add_new_stock_with_numeric_keys'**, which adds the new stock {1:'iPhone Model A', 2:'Xiaomi Model B', 3:'Nokia Model C'} to the existing inventory, and which checks if the method raises a ValueError with the message "Mobile model name must be a string" using assert.
+    def test_add_new_stock_with_numeric_keys(self):
+      with pytest.raises(ValueError) as e:
+        self.inventory.add_stock({1:'iPhone Model A', 2:'Xiaomi Model B', 3:'Nokia Model C'})
+      assert str(e.value) == "Mobile model name must be a string"
+
+
+    # Define a pytest test method **'test_add_new_stock_with_nonnumeric_values'**, which adds the new stock {'iPhone Model A':'50', 'Xiaomi Model B':'2000', 'Nokia Model C':'25'} to the existing inventory, and which checks if the method raises a ValueError with the message "No. of mobiles must be a positive integer" using assert.
+    def test_add_new_stock_with_nonnumeric_values(self):
+      with pytest.raises(ValueError) as e:
+        self.inventory.add_stock({'iPhone Model A':'50', 'Xiaomi Model B':'2000', 'Nokia Model C':'25'})
+      assert str(e.value) == "No. of mobiles must be a positive integer"
+
+    # Define a pytest test method **'test_add_new_stock_with_float_values'**, which adds the new stock {'iPhone Model A':50.5, 'Xiaomi Model B':2000.3, 'Nokia Model C':25} to the existing inventory, and which checks if the method raises a ValueError with the message "No. of mobiles must be a positive integer" using assert.
+    def test_add_new_stock_with_float_values(self):
+      with pytest.raises(ValueError) as e:
+        self.inventory.add_stock({'iPhone Model A':50.5, 'Xiaomi Model B':2000.3, 'Nokia Model C':25})
+      assert str(e.value) == "No. of mobiles must be a positive integer"
+
+# Define another pytest test class **'TestInventorySellStock'**, which tests the behavior of the **'sell_stock'** method, with the following tests
+class TestInventorySellStock:
+    # Define a pytest class fixture 'setup_class', which creates an **'MobileInventory'** instance with the input {'iPhone Model A':50, 'Xiaomi Model B': 2000, 'Nokia Model C':10, 'Sony Model D':1}, and assign it to the class attribute **'inventory'**.
+    @classmethod
+    def setup_class(cls):
+      cls.inventory = MobileInventory({'iPhone Model A':50, 'Xiaomi Model B': 2000, 'Nokia Model C':10, 'Sony Model D':1})
+
+    # Define a pytest test method **'test_sell_stock_as_dict'**, which sells the requested stock {'iPhone Model A':2, 'Xiaomi Model B':20, 'Sony Model D':1} from the existing inventory, and update the **balance_inventory** attribute. Also check if the updated **balance_inventory** equals {'iPhone Model A':48, 'Xiaomi Model B': 1980, 'Nokia Model C':10, 'Sony Model D':0} using assert.
+    def test_sell_stock_as_dict(self):
+        self.inventory.sell_stock({'iPhone Model A': 2,
+                                  'Xiaomi Model B': 20,
+                                  'Sony Model D': 1})
+        assert self.inventory.balance_inventory == {'iPhone Model A': 48,
+                                  'Xiaomi Model B': 1980,
+                                  'Nokia Model C': 10,
+                                  'Sony Model D': 0}
+
+    # Define a pytest test method **'test_sell_stock_as_list'**, which tries selling the requested stock ['iPhone Model A', 'Xiaomi Model B', 'Nokia Model C'] from the existing inventory, and which checks if the method raises a TypeError with the message "Requested stock must be a dictionary" using assert.
+    def test_sell_stock_as_list(self):
+        with pytest.raises(TypeError) as e:
+            self.inventory.sell_stock(['iPhone Model A', 'Xiaomi Model B', 'Nokia Model C'])
+        assert str(e.value) == "Requested stock must be a dictionary"
+
+
+    # Define a pytest test method **'test_sell_stock_with_numeric_keys'**, which tries selling the requested stock {1:'iPhone Model A', 2:'Xiaomi Model B', 3:'Nokia Model C'} from the existing inventory, and which checks if the method raises ValueError with the message "Mobile model name must be a string" using assert.
+    def test_sell_stock_with_numeric_keys(self):
+        with pytest.raises(ValueError) as e:
+            self.inventory.sell_stock({1: 'iPhone Model A', 2: 'Xiaomi Model B', 3: 'Nokia Model C'})
+        assert str(e.value) == "Mobile model name must be a string"
+
+
+    # Define a pytest test method **'test_sell_stock_with_nonnumeric_values'**, which tries selling the requested stock {'iPhone Model A':'2', 'Xiaomi Model B':'3', 'Nokia Model C':'4'} from the existing inventory, and which checks if the method raises a ValueError with the message "No. of mobiles must be a positive integer" using assert.
+    def test_sell_stock_with_nonnumeric_values(self):
+        with pytest.raises(ValueError) as e:
+            self.inventory.sell_stock({'iPhone Model A': '2', 'Xiaomi Model B': '3', 'Nokia Model C': '4'})
+        assert str(e.value) == "No. of mobiles must be a positive integer"
+
+    # Define a pytest test method **'test_sell_stock_with_float_values'**, which tries selling the requested stock {'iPhone Model A':2.5, 'Xiaomi Model B':3.1, 'Nokia Model C':4} from the existing inventory, and which checks if the method raises a ValueError with the message "No. of mobiles must be a positive integer" using assert.
+    def test_sell_stock_with_float_values(self):
+        with pytest.raises(ValueError) as e:
+            self.inventory.sell_stock({'iPhone Model A': 2.5,
+                    'Xiaomi Model B': 3.1, 'Nokia Model C': 4})
+        assert str(e.value) == "No. of mobiles must be a positive integer"
+
+    # Define a pytest test method **'test_sell_stock_of_nonexisting_model'**, which tries selling the requested stock {'iPhone Model B':2, 'Xiaomi Model B':5} from the existing inventory, and which checks if the method raises an InsufficientException with the message "No Stock. New Model Request" using assert.
+    def test_sell_stock_of_nonexisting_model(self):
+        with pytest.raises(InsufficientException) as e:
+            self.inventory.sell_stock({'iPhone Model B': 2,
+                    'Xiaomi Model B': 5})
+        assert str(e.value) == "No Stock. New Model Request"
+
+    # Define a pytest test method **'test_sell_stock_of_insufficient_stock'**, which tries selling the requested stock {'iPhone Model A':2, 'Xiaomi Model B':5, 'Nokia Model C': 15} from the existing inventory, and which checks if the method raises an InsufficientException with the message "Insufficient Stock" using assert.
+    def test_sell_stock_of_insufficient_stock(self):
+        with pytest.raises(InsufficientException) as e:
+            self.inventory.sell_stock({'iPhone Model A': 2,
+                    'Xiaomi Model B': 5, 'Nokia Model C': 15})
+        assert str(e.value) == "Insufficient Stock"
